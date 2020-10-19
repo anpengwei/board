@@ -3,7 +3,7 @@
 </template>
 
 <script>
-// require("./china");
+import './china'
 export default {
   name: "chinaChart",
   components: {},
@@ -426,20 +426,29 @@ export default {
               show: true, // 是否显示对应地名
               textStyle: {
                 fontSize: "7",
+                color:'#fff',
+              },
+            },
+            emphasis: {
+              textStyle: {
+                fontSize: "7",
+                color:'#fff',
               },
             },
           },
           itemStyle: {
             normal: {
-              borderColor: "rgba(0, 0, 0, 0.2)",
+              areaColor: 'rgba(30, 52, 118, 1)',
+              borderColor: "#00E7FF",
             },
             emphasis: {
-              areaColor: null,
-              shadowOffsetX: 0,
-              shadowOffsetY: 0,
-              shadowBlur: 20,
-              borderWidth: 0,
-              shadowColor: "rgba(0, 0, 0, 0.5)",
+              areaColor: 'rgba(30, 52, 118, 1)',
+              borderColor: "#00E7FF",
+              // shadowOffsetX: 0,
+              // shadowOffsetY: 0,
+              // shadowBlur: 20,
+              // borderWidth: 0,
+              // shadowColor: "rgba(0, 0, 0, 0.5)",
             },
           },
           // regions: haveData
@@ -451,43 +460,65 @@ export default {
             coordinateSystem: "geo", // 对应上方配置
             data: convertData(this.rawData),
             symbolSize: function(val) {
-              return val[2] / 10;
-            },
-          },
-          {
-            name: "Top 5",
-            type: "effectScatter",
-            coordinateSystem: "bmap",
-            data: convertData(
-              this.rawData
-                .sort(function(a, b) {
-                  return b.value - a.value;
-                })
-                .slice(0, 6)
-            ),
-            symbolSize: function(val) {
-              return val[2] / 10;
-            },
-            encode: {
-              value: 2,
-            },
-            showEffectOn: "render",
-            rippleEffect: {
-              brushType: "stroke",
-            },
-            hoverAnimation: true,
-            label: {
-              formatter: "{b}",
-              position: "right",
-              show: true,
+              return val[2] / 30;
             },
             itemStyle: {
-              color: "purple",
+              // color: "purple",
+              background: "linear-gradient(180deg, #FD940A 0%, #FB606B 100%)",
               shadowBlur: 10,
               shadowColor: "#333",
             },
-            zlevel: 1,
           },
+          {
+            name: "销量",
+            type: "scatter",
+            coordinateSystem: "geo", // 对应上方配置
+            data: convertData(this.rawData),
+            symbolSize: function(val) {
+              return val[2] / 20;
+            },
+            itemStyle: {
+              // color: "purple",
+              background: "linear-gradient(180deg, #FD940A 0%, #FB606B 100%)",
+              shadowBlur: 10,
+              shadowColor: "#333",
+              opacity:0.37
+            },
+          },
+          // {
+          //   name: "Top 5",
+          //   type: "effectScatter",
+          //   coordinateSystem: "bmap",
+          //   data: convertData(
+          //     this.rawData
+          //       .sort(function(a, b) {
+          //         return b.value - a.value;
+          //       })
+          //       .slice(0, 6)
+          //   ),
+          //   symbolSize: function(val) {
+          //     return val[2] / 10;
+          //   },
+          //   encode: {
+          //     value: 2,
+          //   },
+          //   showEffectOn: "render",
+          //   rippleEffect: {
+          //     brushType: "stroke",
+          //   },
+          //   hoverAnimation: true,
+          //   label: {
+          //     formatter: "{b}",
+          //     position: "right",
+          //     show: true,
+          //   },
+          //   itemStyle: {
+          //     color: "purple",
+          //     shadowBlur: 10,
+          //     shadowColor: "#333",
+          //   },
+          //   zlevel: 1,
+          // },
         ],
       };
 
