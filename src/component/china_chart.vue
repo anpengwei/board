@@ -98,6 +98,10 @@ export default {
         }
         return res;
       }
+
+      const sortList = _this.rawData.sort((a,b) => a.value - b.value)
+      const sortListReverse = sortList.reverse()
+      console.log(sortList,'ggg')
       let color = [
           {
             offset: 0,
@@ -114,10 +118,10 @@ export default {
         geo: {
           // 这个是重点配置区
           map: "china", // 表示中国地图
-          roam: true,
+          roam: false,
           label: {
             normal: {
-              show: true, // 是否显示对应地名
+              show: false, // 是否显示对应地名
               textStyle: {
                 fontSize: "7",
                 color:'#fff',
@@ -149,13 +153,13 @@ export default {
         },
         series: [
           {
-            name: "销量",
+            name: "",
             type: "scatter",
             coordinateSystem: "geo", // 对应上方配置
             data: convertData(this.rawData),
             symbolSize: function(val) {
-              console.log(val,'77777')
-              return val[2] % 30;
+              const width = sortList.findIndex(i=>i.value === val[2])
+              return width / 2
             },
             itemStyle: {
               color: function() {
@@ -168,18 +172,76 @@ export default {
                   colorStops: color,
                   global: false, // 缺省为 false
                 };
+              },
+              tooltip:{
+                formatter:  function (params) {
+                  const index = sortList.reverse().findIndex(i=>i.value === params.data.value[2])
+                  return `
+                      TOP:
+                      <span style="color: #01E754;font-size: 16px;">${index +1}</span> <br />
+                      ${params.data.name}:
+                      <span style="color: #01E754;font-size: 16px;">${params.data.value[2]}</span>`;
+                }
               },
               shadowBlur: 10,
               shadowColor: "#333",
             },
           },
           {
-            name: "销量",
+            name: "",
             type: "scatter",
             coordinateSystem: "geo", // 对应上方配置
             data: convertData(this.rawData),
             symbolSize: function(val) {
-              return val[2] % 30 + 10;
+              const width = sortList.findIndex(i=>i.value === val[2])
+              return (width + 10) /2;
+            },
+            itemStyle: {
+              color: function() {
+                return {
+                  type: "linear",
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: color,
+                  global: false, // 缺省为 false
+                };
+              },
+              tooltip:{
+                formatter:  function (params) {
+                  const index = sortListReverse.findIndex(i=>i.value === params.data.value[2])
+                  return `
+                      TOP:
+                      <span style="color: #01E754;font-size: 16px;">${index +1}</span> <br />
+                      ${params.data.name}:
+                      <span style="color: #01E754;font-size: 16px;">${params.data.value[2]}</span>`;
+                }
+              },
+              shadowBlur: 10,
+              shadowColor: "#333",
+              opacity:0.37
+            },
+          },
+          {
+            name: "",
+            type: "effectScatter",
+            coordinateSystem: "geo",
+            data: convertData(this.rawData),
+            symbolSize: function(val) {
+              const width = sortList.findIndex(i=>i.value === val[2])
+              return (width + 10) / 2
+            },
+            encode: {
+              value: 2,
+            },
+            showEffectOn: "render",
+            rippleEffect: {
+              brushType: "stroke",
+            },
+            hoverAnimation: true,
+            label: {
+              show: false,
             },
             itemStyle: {
               color: function() {
@@ -195,43 +257,19 @@ export default {
               },
               shadowBlur: 10,
               shadowColor: "#333",
-              opacity:0.37
             },
+            tooltip:{
+              formatter:  function (params) {
+                const index = sortListReverse.findIndex(i=>i.value === params.data.value[2])
+                return `
+                    TOP:
+                    <span style="color: #01E754;font-size: 16px;">${index +1}</span> <br />
+                    ${params.data.name}:
+                    <span style="color: #01E754;font-size: 16px;">${params.data.value[2]}</span>`;
+              }
+            },
+            zlevel: 1,
           },
-          // {
-          //   name: "Top 5",
-          //   type: "effectScatter",
-          //   coordinateSystem: "bmap",
-          //   data: convertData(
-          //     this.rawData
-          //       .sort(function(a, b) {
-          //         return b.value - a.value;
-          //       })
-          //       .slice(0, 6)
-          //   ),
-          //   symbolSize: function(val) {
-          //     return val[2] / 10;
-          //   },
-          //   encode: {
-          //     value: 2,
-          //   },
-          //   showEffectOn: "render",
-          //   rippleEffect: {
-          //     brushType: "stroke",
-          //   },
-          //   hoverAnimation: true,
-          //   label: {
-          //     formatter: "{b}",
-          //     position: "right",
-          //     show: true,
-          //   },
-          //   itemStyle: {
-          //     color: "purple",
-          //     shadowBlur: 10,
-          //     shadowColor: "#333",
-          //   },
-          //   zlevel: 1,
-          // },
         ],
       };
 
