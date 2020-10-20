@@ -49,6 +49,7 @@ export default {
     init() {
       let myChart = this.$echarts.init(this.$refs.chart);
       let seriesData = [];
+      let xData = [];
       if (this.setVal) {
         let index = this.rawData.findIndex((item) => item.opacity === 1);
         if (index < 4) {
@@ -59,6 +60,13 @@ export default {
           this.$set(this.rawData[4], "opacity", 0.2);
         }
       }
+
+      let myDate = new Date();
+      let day = myDate.getDate();
+      for (let i = 0; i < 5; i++) {
+        xData.push(`${Number(day) - i}日`);
+      }
+      console.log(xData);
       this.rawData.forEach((item) => {
         seriesData.push({
           name: item.name,
@@ -90,7 +98,7 @@ export default {
           itemHeight: 10,
           textStyle: {
             color: "#fff",
-            fontSize: 12,
+            fontSize: 10,
           },
           data: [
             "创维优课",
@@ -104,9 +112,10 @@ export default {
           top: 40,
           bottom: 65,
           left: 40,
+          right: 0,
         },
         xAxis: {
-          data: ["20日", "21日", "22日", "23日", "24日"],
+          data: xData.reverse(),
           axisLabel: {
             color: "#fff",
           },
