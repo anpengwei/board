@@ -47,8 +47,14 @@
                 v-for="item in equipmentNum"
                 :key="item.id"
               >
-                <span>{{ item.name }}</span>
-                <span>{{ item.value }}</span>
+                <span class="equipment_num_item">{{ item.name }}</span>
+                <span class="equipment_num_item">{{ item.value }}</span>
+                <div class="equipment_num_trend" v-if="item.trend">
+
+                  <img v-if="item.trend === '1'" src="../../image/up.png" alt="">
+                  <img v-if="item.trend === '2'" src="../../image/down.png" alt="">
+
+                </div>
               </div>
             </div>
           </div>
@@ -165,26 +171,31 @@ export default {
           id: 1,
           name: "广东省",
           value: "20843",
+          trend:'1',  //趋势 1上升，2下降
         },
         {
           id: 2,
           name: "河南省",
           value: "14626",
+          trend:'1',  //趋势 1上升，2下降
         },
         {
           id: 3,
           name: "河北省",
           value: "8139",
+          trend:'2',  //趋势 1上升，2下降
         },
         {
           id: 4,
           name: "湖北省",
           value: "8127",
+          trend:'1',  //趋势 1上升，2下降
         },
         {
           id: 5,
           name: "陕西省",
           value: "7806",
+          trend:'1',  //趋势 1上升，2下降
         },
       ],
       addData: [
@@ -338,7 +349,7 @@ export default {
       border: none;
     }
     .equipment_num {
-      width: 257px;
+      width: 200px;
       height: 46px;
       float: right;
       background: linear-gradient(
@@ -350,6 +361,7 @@ export default {
       margin-bottom: 8px;
       display: flex;
       align-items: center;
+      padding-left: 50px;
       span {
         font-size: 16px;
         font-family: PingFangSC-Medium, PingFang SC;
@@ -357,11 +369,18 @@ export default {
         color: #ffffff;
         line-height: 22px;
       }
-      span:first-child {
-        margin-left: 33px;
+      /*span:first-child {*/
+      /*  margin-left: 33px;*/
+      /*}*/
+      /*span:last-child {*/
+      /*  margin-left: 20px;*/
+      /*}*/
+
+      &_item{
+        margin-right: 20px;
+        width: 50px;
       }
-      span:last-child {
-        margin-left: 20px;
+      &-trend{
       }
     }
   }
