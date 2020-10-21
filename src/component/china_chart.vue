@@ -99,9 +99,8 @@ export default {
         return res;
       }
 
-      const sortList = _this.rawData.sort((a,b) => a.value - b.value)
-      const sortListReverse = sortList.reverse()
-      console.log(sortList,'ggg')
+      const sortList = [].concat(_this.rawData).sort((a,b) => a.value - b.value)
+      const sortListReverse = [].concat(_this.rawData).sort((a,b) => b.value - a.value)
       let color = [
           {
             offset: 0,
@@ -175,7 +174,7 @@ export default {
               },
               tooltip:{
                 formatter:  function (params) {
-                  const index = sortList.reverse().findIndex(i=>i.value === params.data.value[2])
+                  const index = sortListReverse.findIndex(i=>i.value === params.data.value[2])
                   return `
                       TOP:
                       <span style="color: #01E754;font-size: 16px;">${index +1}</span> <br />
