@@ -21,6 +21,10 @@ const Coms = [
     name: "pieChart",
     component: () => import("./pie_chart.vue"),
   },
+  {
+    name: "notify",
+    component: () => import("./notify.vue"),
+  },
 ];
 
 const vueComs = () => {
