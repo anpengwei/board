@@ -56,19 +56,7 @@
       </div>
       <!-- 右 -->
       <div class="board_box3">
-        <div class="board_box3_top">
-          <div class="line-title">
-            <div class="line"></div>
-            <div class="title-text">消息</div>
-          </div>
-          <div class="loop_class">
-            <div class="loop_li" v-for="item in loopData" :key="item.id">
-              <span class="loop_name">{{ item.name }}</span>
-              <span class="loop_text">{{ item.text }}</span>
-              <span class="loop_time">{{ item.time }}</span>
-            </div>
-          </div>
-        </div>
+        <notify></notify>
         <div class="board_box3_bottom">
           <div class="board_box3_bottom_add">
             <section v-for="item in addData" :key="item.id">
@@ -379,57 +367,6 @@ export default {
   }
 }
 .board_box3 {
-  .board_box3_top {
-    width: 440px;
-    height: 565px;
-    background: #1b2455;
-    box-shadow: 0px 4px 8px 0px rgba(3, 11, 36, 0.17);
-    border-radius: 6px;
-    // padding-left: 30px;
-    padding-bottom: 35px;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    .line-title {
-      margin-left: 30px;
-    }
-    .loop_li {
-      width: 401px;
-      height: 46px;
-      margin-left: 30px;
-      background: linear-gradient(
-        90deg,
-        rgba(58, 74, 142, 0.46) 0%,
-        #192251 100%
-      );
-      border-radius: 1px;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      .loop_name {
-        font-size: 16px;
-        font-family: PingFangSC-Medium, PingFang SC;
-        font-weight: 500;
-        color: #ffffff;
-        line-height: 22px;
-      }
-      .loop_text {
-        font-size: 16px;
-        font-family: PingFangSC-Medium, PingFang SC;
-        font-weight: 500;
-        color: #8c96cc;
-        line-height: 22px;
-      }
-      .loop_time {
-        font-size: 12px;
-        font-family: PingFangSC-Medium, PingFang SC;
-        font-weight: 500;
-        color: #03bad7;
-        line-height: 17px;
-      }
-    }
-  }
   .board_box3_bottom {
     margin-top: 16px;
     width: 440px;
