@@ -15,10 +15,20 @@
         <!-- 左下 -->
         <div class="board_box1_bottom">
           <div class="button_change">
-            <div class="button_left">开机时长统计</div>
-            <div class="button_right">开关机时间段分布</div>
+            <div
+              :class="chartChange ? 'button_left' : 'button_left_actived'"
+              @click="chartChange = false"
+            >
+              开机时长统计
+            </div>
+            <div
+              :class="chartChange ? 'button_right_actived' : 'button_right'"
+              @click="chartChange = true"
+            >
+              开关机时间段分布
+            </div>
           </div>
-          <canvasBarBottom />
+          <canvasBarBottom :chartChange="chartChange" />
         </div>
       </div>
       <!-- 中 -->
@@ -31,9 +41,6 @@
             <pieChart />
           </div>
           <div class="board_box2_bottom_right">
-            <div class="board_box2_bottom_right_title">
-              <span>省份</span> <span>设备数</span>
-            </div>
             <div>
               <div
                 class="equipment_num"
@@ -108,6 +115,8 @@ export default {
   // 定义属性
   data() {
     return {
+      setVal: null,
+      chartChange: false,
       loopData: [
         {
           id: "0",
@@ -161,26 +170,31 @@ export default {
       equipmentNum: [
         {
           id: 0,
+          name: "省份",
+          value: "设备数",
+        },
+        {
+          id: 1,
           name: "广东省",
           value: "20843",
         },
         {
-          id: 1,
+          id: 2,
           name: "河南省",
           value: "14626",
         },
         {
-          id: 2,
+          id: 3,
           name: "河北省",
           value: "8139",
         },
         {
-          id: 3,
+          id: 4,
           name: "湖北省",
           value: "8127",
         },
         {
-          id: 4,
+          id: 5,
           name: "陕西省",
           value: "7806",
         },
@@ -206,9 +220,18 @@ export default {
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    setInt() {
+      let _this = this;
+      this.setVal = setInterval(() => {
+        _this.chartChange = !_this.chartChange;
+      }, 10000);
+    },
+  },
   created() {},
-  mounted() {},
+  mounted() {
+    this.setInt();
+  },
 };
 </script>
 
@@ -268,6 +291,15 @@ export default {
     .button_left {
       width: 157px;
       height: 42px;
+      background: #121b49;
+      border-radius: 21px 0px 0px 21px;
+      text-align: center;
+      line-height: 42px;
+      cursor: pointer;
+    }
+    .button_left_actived {
+      width: 157px;
+      height: 42px;
       background: #2d3770;
       border-radius: 21px 0px 0px 21px;
       text-align: center;
@@ -278,6 +310,15 @@ export default {
       width: 157px;
       height: 42px;
       background: #121b49;
+      border-radius: 0px 21px 21px 0px;
+      text-align: center;
+      line-height: 42px;
+      cursor: pointer;
+    }
+    .button_right_actived {
+      width: 157px;
+      height: 42px;
+      background: #2d3770;
       border-radius: 0px 21px 21px 0px;
       text-align: center;
       line-height: 42px;
@@ -304,9 +345,14 @@ export default {
   .board_box2_bottom_right {
     width: 310px;
     color: #ffffff;
+    .equipment_num:first-child {
+      background: none;
+      border: none;
+    }
     .equipment_num {
       width: 257px;
       height: 46px;
+      float: right;
       background: linear-gradient(
         90deg,
         rgba(58, 74, 142, 0.46) 0%,
@@ -329,16 +375,6 @@ export default {
       span:last-child {
         margin-left: 20px;
       }
-    }
-  }
-  .board_box2_bottom_right_title {
-    display: flex;
-    margin-bottom: 14px;
-    span:first-child {
-      margin-left: 33px;
-    }
-    span:last-child {
-      margin-left: 25px;
     }
   }
 }
