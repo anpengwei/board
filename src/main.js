@@ -3,6 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import "./style/main.css";
 import echarts from "echarts";
+import './component/china'
+
+// import '/node_modules/echarts/map/js/china'
 import vueCom from "./component/main";
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;

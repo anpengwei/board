@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import './china'
+// import './china'
 export default {
   name: "chinaChart",
   components: {},
