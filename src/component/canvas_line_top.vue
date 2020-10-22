@@ -151,9 +151,43 @@ export default {
         _this.init();
       }, 3000);
     },
+    initData(){
+      const week = new Date().getDay()
+
+      if([0,6].includes(week)){
+        this.rawData.map(i=>{
+
+          if(['创维优课','天赐云助教'].includes(i.name)){
+            i.data = this.randomFactory(20,30)
+          }
+          else {
+            i.data = this.randomFactory(1,5)
+          }
+
+          return i
+        })
+
+      }else {
+        this.rawData.map(i=>{
+
+          i.data = this.randomFactory(50,80)
+
+          return i
+        })
+      }
+    },
+    randomFactory(s=0,e=0){
+      let dataArr = []
+      for(let index = 0; index < 5; index++){
+        const random = s + Math.ceil(Math.random()*(e-s))
+        dataArr.push(random)
+      }
+      return dataArr
+    },
   },
   created() {},
   mounted() {
+    this.initData()
     this.init();
     this.setInt();
   },

@@ -81,8 +81,8 @@
               </div>
               <div class="num_2">
                 <section class="box_num">
-                  <span>进行中设备数</span>
-                  <section class="box_num_background">95368</section>
+                  <span>运行中设备数</span>
+                  <section class="box_num_background">{{runEqCount}}</section>
                 </section>
                 <section class="dashed_2"></section>
               </div>
@@ -109,6 +109,7 @@ export default {
   // 定义属性
   data() {
     return {
+      runEqCount:0,
       setVal: null,
       chartChange: false,
       loopData: [
@@ -226,10 +227,35 @@ export default {
         _this.chartChange = !_this.chartChange;
       }, 10000);
     },
+    runEqNum(){
+      const week = new Date().getDay()
+
+      let defNum = 95368
+
+      if([0,6].includes(week)){
+        defNum = 3687
+      }
+
+      const random = Math.ceil(Math.random() *10)
+
+      const type= Math.ceil(Math.random()*2)
+
+      const data = type === 1 ? defNum + random : defNum - random
+
+      this.runEqCount = data
+
+    },
+    init(){
+      this.runEqNum()
+      setInterval(()=>{
+        this.runEqNum()
+      },30000)
+    },
   },
   created() {},
   mounted() {
     this.setInt();
+    this.init()
   },
 };
 </script>
