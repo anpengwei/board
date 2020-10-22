@@ -170,15 +170,6 @@
           return i
         })
         this.setTime()
-        // setInterval(()=>{
-        //   this.animation.play()
-        //
-        //   this.onNewData()
-        //
-        //   setTimeout(()=>{
-        //     this.nowDataAnimation.play()
-        //   },0)
-        // },2000)
       },
       onAnimatePlay(){
         this.animation.play()
@@ -198,18 +189,10 @@
         },second)
       },
       onNewData(){
-        console.log(1122222)
-        // const newData = {
-        //     id: "0",
-        //     name: "天津一中",
-        //     text: "新增一台86D设备",
-        //     time: "刚刚",
-        // }
 
         this.loopData.unshift(this.nowData)
 
         this.nowData = this.loopData[this.loopData.length -1]
-        console.log(this.nowData,'jklljkklj')
         this.nowData.timestamp = new Date().valueOf()
         this.nowData.time = '刚刚'
 
@@ -217,12 +200,8 @@
         this.loopData.map(i => {
           const timeObj = timeFormatToString(new Date().valueOf() - i.timestamp,'S')
           i.time = (timeObj.hour === '00' ? '' : `${timeObj.hour}小时`) + (timeObj.minute === '00' ? '1分钟' : `${timeObj.minute}分钟`)
-          // i.time = `${timeObj.hour}小时${timeObj.minute}分钟${timeObj.second}秒`
           return i
         })
-
-
-
 
       },
     },

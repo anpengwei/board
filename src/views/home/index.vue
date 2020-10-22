@@ -83,6 +83,7 @@
                 <section class="box_num">
                   <span>运行中设备数</span>
                   <section class="box_num_background">{{runEqCount}}</section>
+                  <span ref="runEqNum" :class="['box_num_animate',changeType === 1? 'box_num_up':'box_num_down']">{{changeType ===1? '+':'-'}}{{changeData}}</span>
                 </section>
                 <section class="dashed_2"></section>
               </div>
@@ -109,7 +110,11 @@ export default {
   // 定义属性
   data() {
     return {
+      animation:'',
+      changeType:1,
+      changeData:0,
       runEqCount:0,
+      defNum:95368,
       setVal: null,
       chartChange: false,
       loopData: [
@@ -228,24 +233,50 @@ export default {
       }, 10000);
     },
     runEqNum(){
-      const week = new Date().getDay()
-
-      let defNum = 95368
-
-      if([0,6].includes(week)){
-        defNum = 3687
-      }
 
       const random = Math.ceil(Math.random() *10)
 
       const type= Math.ceil(Math.random()*2)
 
-      const data = type === 1 ? defNum + random : defNum - random
+      const data = type === 1 ? this.runEqCount + random : this.runEqCount - random
+
+      this.changeType = type
+
+      this.changeData = random
 
       this.runEqCount = data
 
+      this.animation.play()
+
+
+    },
+    initAnimate(){
+      const num = this.$refs.runEqNum
+
+      const keyframes = [
+        // keyframes
+        { transform: 'translateY(0px)',opacity:0 },
+        { transform: 'translateY(0px)',opacity:1 },
+        { transform: 'translateY(-30px)',opacity:0 }
+      ]
+
+      this.animation = num.animate(keyframes, {
+        duration: 3000,
+        fill: 'forwards',
+        // iterations: Infinity
+      })
+      this.animation.play()
     },
     init(){
+      const week = new Date().getDay()
+
+      this.runEqCount = 95368
+
+      if([0,6].includes(week)){
+        this.runEqCount = 3687
+      }
+
+      this.initAnimate()
       this.runEqNum()
       setInterval(()=>{
         this.runEqNum()
@@ -481,6 +512,19 @@ export default {
           align-items: center;
           justify-content: center;
           flex-direction: column;
+          position: relative;
+          .box_num_animate{
+            position: absolute;
+            top: 30px;
+            right: -18px;
+            opacity: 0;
+          }
+          .box_num_up{
+            color: rgba(225,128,70);
+          }
+          .box_num_down{
+            color: rgba(104,199,116);
+          }
           span {
             color: #fff;
             font-size: 12px;
