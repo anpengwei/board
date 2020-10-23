@@ -25,6 +25,10 @@ const Coms = [
     name: "notify",
     component: () => import("./notify.vue"),
   },
+  {
+    name: "taiwanChart",
+    component: () => import("./taiwan_chart.vue"),
+  },
 ];
 
 const vueComs = () => {

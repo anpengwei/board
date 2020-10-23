@@ -35,6 +35,9 @@
       <div class="board_box2">
         <div class="board_box2_top">
           <chinaChart />
+          <div class="diaoyudao">
+            <taiwanChart></taiwanChart>
+          </div>
         </div>
         <div class="board_box2_bottom">
           <div class="board_box2_bottom_left">
@@ -387,6 +390,19 @@ export default {
   .board_box2_top {
     width: 700px;
     height: 565px;
+    position: relative;
+    .diaoyudao{
+      width: 9%;
+      height: 17%;
+      position: absolute;
+      bottom: 24%;
+      right: 7%;
+      border: 1px solid rgba(55,97,144,1);
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
   .board_box2_bottom {
     width: 700px;
