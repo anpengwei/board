@@ -148,6 +148,7 @@ export default {
               // shadowColor: "rgba(0, 0, 0, 0.5)",
             },
           },
+          zoom:1.2
           // regions: haveData
         },
         series: [

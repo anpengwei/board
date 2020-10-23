@@ -44,7 +44,7 @@
         nowData:{
 
           id: "8",
-          name: "天津一中",
+          name: "许昌幼儿师范学校",
           text: "新增一台86D设备",
           timestamp:new Date().valueOf(),
           time: "刚刚",
@@ -60,15 +60,15 @@
           },
           {
             id: "1",
-            name: "天津一中",
-            text: "新增一台86D设备",
+            name: "长春坦克学院",
+            text: "新增需求反馈",
             timestamp:4,
             time: "1分钟",
           },
           {
             id: "2",
-            name: "天津一中",
-            text: "新增一台86T设备",
+            name: "凯成-四川运营中心",
+            text: "下发定时策略",
             timestamp:4,
             time: "1分钟",
           },
@@ -82,41 +82,41 @@
           {
             id: "4",
             name: "天津一中",
-            text: "新增一台86T设备",
+            text: "新增一台55X设备",
             timestamp:4,
             time: "1分钟",
           },
           {
             id: "5",
-            name: "天津一中",
-            text: "新增一台86D设备",
+            name: "兴国平川中学",
+            text: "增加需求反馈",
             timestamp:4,
             time: "1分钟",
           },
           {
             id: "6",
-            name: "天津一中",
+            name: "壶关县第一中学",
             text: "新增一台86T设备",
             timestamp:4,
             time: "1分钟",
           },
           {
             id: "7",
-            name: "天津一中",
-            text: "新增一台86D设备",
+            name: "许昌科技学校",
+            text: "开启弹窗拦截",
             timestamp:4,
             time: "1分钟",
           },
           {
             id: "9",
-            name: "天津一中",
+            name: "普洱卫生学校",
             text: "新增一台86T设备",
             timestamp:4,
             time: "1分钟",
           },
           {
             id: "10",
-            name: "天津一中",
+            name: "阳曲一中",
             text: "新增一台86D设备",
             timestamp:4,
             time: "1分钟",
@@ -285,7 +285,7 @@
         margin-bottom: 14px;
         display: flex;
         align-items: center;
-        padding-left: 50px;
+        padding-left: 30px;
         /*justify-content: space-around;*/
         .loop_name {
           font-size: 16px;
@@ -293,7 +293,8 @@
           font-weight: 500;
           color: #ffffff;
           line-height: 22px;
-          margin-right: 50px;
+          margin-right: 20px;
+          width: 150px;
         }
         .loop_text {
           font-size: 16px;
@@ -301,7 +302,8 @@
           font-weight: 500;
           color: #8c96cc;
           line-height: 22px;
-          margin-right: 50px;
+          margin-right: 20px;
+          width: 150px;
         }
         .loop_time {
           font-size: 12px;
@@ -324,7 +326,7 @@
         margin-bottom: 14px;
         display: flex;
         align-items: center;
-        padding-left: 50px;
+        padding-left: 30px;
         /*justify-content: space-around;*/
         .loop_name {
           font-size: 16px;
@@ -332,7 +334,8 @@
           font-weight: 500;
           color: #ffffff;
           line-height: 22px;
-          margin-right: 50px;
+          margin-right: 20px;
+          width: 150px;
         }
         .loop_text {
           font-size: 16px;
@@ -340,7 +343,8 @@
           font-weight: 500;
           color: #8c96cc;
           line-height: 22px;
-          margin-right: 50px;
+          margin-right: 20px;
+          width: 150px;
         }
         .loop_time {
           font-size: 12px;

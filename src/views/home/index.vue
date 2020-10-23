@@ -296,7 +296,7 @@ export default {
   margin-top: 126px;
   margin-bottom: 31px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 .line-title {
   display: flex;
@@ -383,7 +383,7 @@ export default {
   }
 }
 .board_box2 {
-  margin: 0 120px 0 119px;
+  margin: 0 50px 0 50px;
   .board_box2_top {
     width: 700px;
     height: 565px;
