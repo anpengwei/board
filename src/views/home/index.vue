@@ -35,6 +35,9 @@
       <div class="board_box2">
         <div class="board_box2_top">
           <chinaChart />
+          <div class="diaoyudao">
+            <taiwanChart></taiwanChart>
+          </div>
         </div>
         <div class="board_box2_bottom">
           <div class="board_box2_bottom_left">
@@ -47,8 +50,14 @@
                 v-for="item in equipmentNum"
                 :key="item.id"
               >
-                <span>{{ item.name }}</span>
-                <span>{{ item.value }}</span>
+                <span class="equipment_num_item">{{ item.name }}</span>
+                <span class="equipment_num_item">{{ item.value }}</span>
+                <div class="equipment_num_trend" v-if="item.trend">
+
+                  <img v-if="item.trend === '1'" src="../../image/up.png" alt="">
+                  <img v-if="item.trend === '2'" src="../../image/down.png" alt="">
+
+                </div>
               </div>
             </div>
           </div>
@@ -75,8 +84,9 @@
               </div>
               <div class="num_2">
                 <section class="box_num">
-                  <span>进行中设备数</span>
-                  <section class="box_num_background">95368</section>
+                  <span>运行中设备数</span>
+                  <section class="box_num_background">{{runEqCount}}</section>
+                  <span ref="runEqNum" :class="['box_num_animate',changeType === 1? 'box_num_up':'box_num_down']">{{changeType ===1? '+':'-'}}{{changeData}}</span>
                 </section>
                 <section class="dashed_2"></section>
               </div>
@@ -103,6 +113,11 @@ export default {
   // 定义属性
   data() {
     return {
+      animation:'',
+      changeType:1,
+      changeData:0,
+      runEqCount:0,
+      defNum:95368,
       setVal: null,
       chartChange: false,
       loopData: [
@@ -165,26 +180,31 @@ export default {
           id: 1,
           name: "广东省",
           value: "20843",
+          trend:'1',  //趋势 1上升，2下降
         },
         {
           id: 2,
           name: "河南省",
           value: "14626",
+          trend:'1',  //趋势 1上升，2下降
         },
         {
           id: 3,
           name: "河北省",
           value: "8139",
+          trend:'2',  //趋势 1上升，2下降
         },
         {
           id: 4,
           name: "湖北省",
           value: "8127",
+          trend:'1',  //趋势 1上升，2下降
         },
         {
           id: 5,
           name: "陕西省",
           value: "7806",
+          trend:'1',  //趋势 1上升，2下降
         },
       ],
       addData: [
@@ -215,10 +235,61 @@ export default {
         _this.chartChange = !_this.chartChange;
       }, 10000);
     },
+    runEqNum(){
+
+      const random = Math.ceil(Math.random() *10)
+
+      const type= Math.ceil(Math.random()*2)
+
+      const data = type === 1 ? this.runEqCount + random : this.runEqCount - random
+
+      this.changeType = type
+
+      this.changeData = random
+
+      this.runEqCount = data
+
+      this.animation.play()
+
+
+    },
+    initAnimate(){
+      const num = this.$refs.runEqNum
+
+      const keyframes = [
+        // keyframes
+        { transform: 'translateY(0px)',opacity:0 },
+        { transform: 'translateY(0px)',opacity:1 },
+        { transform: 'translateY(-30px)',opacity:0 }
+      ]
+
+      this.animation = num.animate(keyframes, {
+        duration: 3000,
+        fill: 'forwards',
+        // iterations: Infinity
+      })
+      this.animation.play()
+    },
+    init(){
+      const week = new Date().getDay()
+
+      this.runEqCount = 95368
+
+      if([0,6].includes(week)){
+        this.runEqCount = 3687
+      }
+
+      this.initAnimate()
+      this.runEqNum()
+      setInterval(()=>{
+        this.runEqNum()
+      },30000)
+    },
   },
   created() {},
   mounted() {
     this.setInt();
+    this.init()
   },
 };
 </script>
@@ -228,7 +299,7 @@ export default {
   margin-top: 126px;
   margin-bottom: 31px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 .line-title {
   display: flex;
@@ -315,10 +386,23 @@ export default {
   }
 }
 .board_box2 {
-  margin: 0 120px 0 119px;
+  margin: 0 50px 0 50px;
   .board_box2_top {
     width: 700px;
     height: 565px;
+    position: relative;
+    .diaoyudao{
+      width: 9%;
+      height: 17%;
+      position: absolute;
+      bottom: 24%;
+      right: 7%;
+      border: 1px solid rgba(55,97,144,1);
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
   .board_box2_bottom {
     width: 700px;
@@ -338,7 +422,7 @@ export default {
       border: none;
     }
     .equipment_num {
-      width: 257px;
+      width: 200px;
       height: 46px;
       float: right;
       background: linear-gradient(
@@ -350,6 +434,7 @@ export default {
       margin-bottom: 8px;
       display: flex;
       align-items: center;
+      padding-left: 50px;
       span {
         font-size: 16px;
         font-family: PingFangSC-Medium, PingFang SC;
@@ -357,11 +442,18 @@ export default {
         color: #ffffff;
         line-height: 22px;
       }
-      span:first-child {
-        margin-left: 33px;
+      /*span:first-child {*/
+      /*  margin-left: 33px;*/
+      /*}*/
+      /*span:last-child {*/
+      /*  margin-left: 20px;*/
+      /*}*/
+
+      &_item{
+        margin-right: 20px;
+        width: 50px;
       }
-      span:last-child {
-        margin-left: 20px;
+      &-trend{
       }
     }
   }
@@ -436,6 +528,19 @@ export default {
           align-items: center;
           justify-content: center;
           flex-direction: column;
+          position: relative;
+          .box_num_animate{
+            position: absolute;
+            top: 30px;
+            right: -18px;
+            opacity: 0;
+          }
+          .box_num_up{
+            color: rgba(225,128,70);
+          }
+          .box_num_down{
+            color: rgba(104,199,116);
+          }
           span {
             color: #fff;
             font-size: 12px;

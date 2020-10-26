@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import './china'
+// import './china'
 export default {
   name: "chinaChart",
   components: {},
@@ -99,9 +99,8 @@ export default {
         return res;
       }
 
-      const sortList = _this.rawData.sort((a,b) => a.value - b.value)
-      const sortListReverse = sortList.reverse()
-      console.log(sortList,'ggg')
+      const sortList = [].concat(_this.rawData).sort((a,b) => a.value - b.value)
+      const sortListReverse = [].concat(_this.rawData).sort((a,b) => b.value - a.value)
       let color = [
           {
             offset: 0,
@@ -149,6 +148,7 @@ export default {
               // shadowColor: "rgba(0, 0, 0, 0.5)",
             },
           },
+          zoom:1.2
           // regions: haveData
         },
         series: [
@@ -156,7 +156,7 @@ export default {
             name: "",
             type: "scatter",
             coordinateSystem: "geo", // 对应上方配置
-            data: convertData(this.rawData),
+            data: convertData(this.rawData.filter(i=>i.name !== '北京')),
             symbolSize: function(val) {
               const width = sortList.findIndex(i=>i.value === val[2])
               return width / 2
@@ -175,7 +175,7 @@ export default {
               },
               tooltip:{
                 formatter:  function (params) {
-                  const index = sortList.reverse().findIndex(i=>i.value === params.data.value[2])
+                  const index = sortListReverse.findIndex(i=>i.value === params.data.value[2])
                   return `
                       TOP:
                       <span style="color: #01E754;font-size: 16px;">${index +1}</span> <br />
@@ -191,7 +191,7 @@ export default {
             name: "",
             type: "scatter",
             coordinateSystem: "geo", // 对应上方配置
-            data: convertData(this.rawData),
+            data: convertData(this.rawData.filter(i=>i.name !== '北京')),
             symbolSize: function(val) {
               const width = sortList.findIndex(i=>i.value === val[2])
               return (width + 10) /2;
@@ -225,9 +225,50 @@ export default {
           },
           {
             name: "",
+            type: "scatter",
+            coordinateSystem: "geo", // 对应上方配置
+            data: convertData([{name:'北京',value:4037},]),
+            symbolSize: function() {
+              // const width = sortList.findIndex(i=>i.value === val[2])
+              return 15;
+            },
+            symbol:'image://data:image/jpeg;base64,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',
+            // itemStyle: {
+            //   color: function() {
+            //     return {
+            //       type: "linear",
+            //       x: 0,
+            //       y: 0,
+            //       x2: 0,
+            //       y2: 1,
+            //       colorStops: color,
+            //       global: false, // 缺省为 false
+            //     };
+            //   },
+            //
+            //   shadowBlur: 10,
+            //   shadowColor: "#333",
+            //   opacity:0.37
+            // },
+            tooltip:{
+              formatter:  function (params) {
+                console.log(params,222)
+                const index = sortListReverse.findIndex(i=>i.value === params.data.value[2])
+                return `
+                      TOP:
+                      <span style="color: #01E754;font-size: 16px;">${index +1}</span> <br />
+                      ${params.data.name}:
+                      <span style="color: #01E754;font-size: 16px;">${params.data.value[2]}</span>`;
+              }
+            },
+            zlevel: 2
+          },
+
+          {
+            name: "",
             type: "effectScatter",
             coordinateSystem: "geo",
-            data: convertData(this.rawData),
+            data: convertData(this.rawData.filter(i=>i.name !== '北京')),
             symbolSize: function(val) {
               const width = sortList.findIndex(i=>i.value === val[2])
               return (width + 10) / 2

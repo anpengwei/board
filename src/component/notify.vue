@@ -31,6 +31,7 @@
 </template>
 
 <script>
+  import {timeFormatToString} from '../lib/timeformat'
   export default {
     name: "notify",
 
@@ -42,9 +43,10 @@
         nowDataAnimation:'',
         nowData:{
 
-          id: "0",
-          name: "天津一中",
+          id: "8",
+          name: "许昌幼儿师范学校",
           text: "新增一台86D设备",
+          timestamp:new Date().valueOf(),
           time: "刚刚",
 
         },
@@ -52,50 +54,72 @@
           {
             id: "0",
             name: "天津一中",
-            text: "新增一台86D设备",
-            time: "刚刚",
+            text: "新增一台86T设备",
+            timestamp:4,
+            time: "1分钟",
           },
           {
             id: "1",
-            name: "天津一中",
-            text: "新增一台86D设备",
-            time: "刚刚",
+            name: "长春坦克学院",
+            text: "新增需求反馈",
+            timestamp:4,
+            time: "1分钟",
           },
           {
             id: "2",
-            name: "天津一中",
-            text: "新增一台86D设备",
-            time: "刚刚",
+            name: "博州蒙古中学",
+            text: "下发定时策略",
+            timestamp:4,
+            time: "1分钟",
           },
           {
             id: "3",
             name: "天津一中",
             text: "新增一台86D设备",
+            timestamp:4,
             time: "1分钟",
           },
           {
             id: "4",
             name: "天津一中",
-            text: "新增一台86D设备",
-            time: "5分钟",
+            text: "新增一台55X设备",
+            timestamp:4,
+            time: "1分钟",
           },
           {
             id: "5",
-            name: "天津一中",
-            text: "新增一台86D设备",
-            time: "5分钟",
+            name: "兴国平川中学",
+            text: "增加需求反馈",
+            timestamp:4,
+            time: "1分钟",
           },
           {
             id: "6",
-            name: "天津一中",
-            text: "新增一台86D设备",
-            time: "10分钟",
+            name: "壶关县第一中学",
+            text: "新增一台86T设备",
+            timestamp:4,
+            time: "1分钟",
           },
           {
             id: "7",
-            name: "天津一中",
+            name: "许昌科技学校",
+            text: "开启弹窗拦截",
+            timestamp:4,
+            time: "1分钟",
+          },
+          {
+            id: "9",
+            name: "普洱卫生学校",
+            text: "新增一台86T设备",
+            timestamp:4,
+            time: "1分钟",
+          },
+          {
+            id: "10",
+            name: "阳曲一中",
             text: "新增一台86D设备",
-            time: "10分钟",
+            timestamp:4,
+            time: "1分钟",
           },
         ],
 
@@ -141,27 +165,43 @@
 
       },
       init(){
-        setInterval(()=>{
-          // this.onNewData()
-          this.animation.play()
+        this.loopData.map(i=>{
+          i.timestamp = new Date().valueOf()
+          return i
+        })
+        this.setTime()
+      },
+      onAnimatePlay(){
+        this.animation.play()
 
-          setTimeout(()=>{
-            this.nowDataAnimation.play()
-          },0)
-        },1000)
+        this.onNewData()
+
+        setTimeout(()=>{
+          this.nowDataAnimation.play()
+        },0)
+      },
+      setTime(){
+        const second = Math.random() * 120 * 1000
+        console.log(second,'延迟毫秒')
+        setTimeout(()=>{
+          this.onAnimatePlay()
+          this.setTime()
+        },second)
       },
       onNewData(){
-        const newData = {
-            id: "0",
-            name: "天津一中",
-            text: "新增一台86D设备",
-            time: "刚刚",
-        }
 
         this.loopData.unshift(this.nowData)
-        this.nowData = newData
 
+        this.nowData = this.loopData[this.loopData.length -1]
+        this.nowData.timestamp = new Date().valueOf()
+        this.nowData.time = '刚刚'
 
+        this.loopData.pop()
+        this.loopData.map(i => {
+          const timeObj = timeFormatToString(new Date().valueOf() - i.timestamp,'S')
+          i.time = (timeObj.hour === '00' ? '' : `${timeObj.hour}小时`) + (timeObj.minute === '00' ? '1分钟' : `${timeObj.minute}分钟`)
+          return i
+        })
 
       },
     },
@@ -227,11 +267,12 @@
       display: flex;
       justify-content: flex-start;
       flex-direction: column;
+      overflow: hidden;
       .line-title {
         margin-left: 30px;
       }
       .loop_now{
-        width: 401px;
+        /*width: 401px;*/
         height: 46px;
         opacity: 0;
         margin-left: 30px;
@@ -244,13 +285,16 @@
         margin-bottom: 14px;
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        padding-left: 30px;
+        /*justify-content: space-around;*/
         .loop_name {
           font-size: 16px;
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
           color: #ffffff;
           line-height: 22px;
+          margin-right: 20px;
+          width: 150px;
         }
         .loop_text {
           font-size: 16px;
@@ -258,6 +302,8 @@
           font-weight: 500;
           color: #8c96cc;
           line-height: 22px;
+          margin-right: 20px;
+          width: 150px;
         }
         .loop_time {
           font-size: 12px;
@@ -268,7 +314,7 @@
         }
       }
       .loop_li {
-        width: 401px;
+        /*width: 401px;*/
         height: 46px;
         margin-left: 30px;
         background: linear-gradient(
@@ -280,13 +326,16 @@
         margin-bottom: 14px;
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        padding-left: 30px;
+        /*justify-content: space-around;*/
         .loop_name {
           font-size: 16px;
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
           color: #ffffff;
           line-height: 22px;
+          margin-right: 20px;
+          width: 150px;
         }
         .loop_text {
           font-size: 16px;
@@ -294,6 +343,8 @@
           font-weight: 500;
           color: #8c96cc;
           line-height: 22px;
+          margin-right: 20px;
+          width: 150px;
         }
         .loop_time {
           font-size: 12px;
